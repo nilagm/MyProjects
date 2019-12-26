@@ -1,0 +1,126 @@
+﻿@using PagedList;
+
+@using PagedList.Mvc;
+
+@model IPagedList<MVC_Assignment.Models.Employee>
+
+
+@{
+    ViewBag.Title = "Employee Data";
+}
+<link href="~/Content/PagedList.css" rel="stylesheet" />
+<link href="~/Content/Common.css" rel="stylesheet" />
+<script src="~/Scripts/jquery-3.3.1.js" type="text/javascript"></script>
+<script src="~/Scripts/jquery-3.3.1.min.js" type="text/javascript"></script>
+
+<script src="~/Scripts/employee.js" type="text/javascript"></script>
+
+
+<div style="font-family:Arial">
+    <h2>Employee System</h2>
+    <div class="form-actions no-color">
+
+        @Html.ActionLink("Create New Employee", "Create", "Employee")
+    </div>
+
+    <p>
+        @using (Html.BeginForm("Index", "Employee", FormMethod.Get))
+        {
+            <b class="radiobtns"> Search by</b> @Html.RadioButton("searchby", "Salary", true)<b class="radiobtns"> Salary</b>
+            @Html.RadioButton("searchby", "Age") <b class="radiobtns"> Age</b>
+            @Html.RadioButton("searchby", "Location", new { id = "radioBtnLoc" })<b class="radiobtns">Location</b>
+
+            @Html.DropDownList("dataList", (IEnumerable<SelectListItem>)ViewBag.Locations, new { id = "ddlLocations" })
+            <div> @Html.TextBox("search", "", new { @id = "searchtxt", @class = "paddingSpace txtBox" })
+            @Html.ValidationMessage("AgeErrorMsg", new { @class = "error" })
+            @Html.ValidationMessage("SalaryErrorMsg", new { @class = "error" })
+            @Html.ValidationMessage("locationErrorMSg", new { @class = "error" })
+
+        </div>
+            <div><input type="submit" value=" Search" id="searchbtn" class="btn paddingSpace" /></div>
+
+        }
+    </p>
+
+    <table class="tblEmp" id="headerEmp">
+        <tr class="trEmp">
+            <th class="thEmp">
+
+                @Html.ActionLink("Id", "Index", new { Sorting_Order = ViewBag.SortingId })
+                @*@Html.DisplayNameFor(model => model.First().Id)*@
+            </th>
+            <th class="thEmp">
+                 @Html.ActionLink("Name", "Index", new { Sorting_Order = ViewBag.SortingName })
+                @*@Html.DisplayNameFor(model => model.First().MaritalStatus)*@
+            </th>
+            <th class="thEmp">
+                @Html.ActionLink("Age", "Index", new { Sorting_Order = ViewBag.SortingAge })
+                @*@Html.DisplayNameFor(model => model.First().Name)*@
+            </th>
+            <th class="thEmp">
+                @Html.ActionLink("MaritalStatus", "Index", new { Sorting_Order = ViewBag.SortingMStatus })
+                @*@Html.DisplayNameFor(model => model.First().Location)*@
+            </th>
+            <th class="thEmp"> Action</th>
+        </tr>
+
+        @if (ViewBag.countRecord != null && ViewBag.countRecord == 0)
+        {
+            <tr class="trEmp">
+
+                <td colspan="4" class="thEmp">No record found</td>
+            </tr>
+        }
+        else
+        {
+            foreach (var item in Model)
+            {
+
+                <tr class="trEmp">
+
+                    <td class="thEmp">
+
+                        @Html.DisplayFor(modelItem => item.Id)
+
+                    </td>
+
+                    <td class="thEmp">
+
+                        @Html.DisplayFor(modelItem => item.Name)
+
+                    </td>
+
+                    <td class="thEmp">
+
+                        @Html.DisplayFor(modelItem => item.Age)
+
+                    </td>
+
+                    <td class="thEmp">
+
+                        @Html.DisplayFor(modelItem => item.MaritalStatus)
+
+                    </td>
+
+                    <td class="thEmp">
+
+                        @Html.ActionLink("Delete", "Delete", new { id = item.Id, @class = "thEmp" })
+
+                    </td>
+
+                </tr>
+            }
+        }
+    </table>
+
+    @if (ViewData.ModelState.IsValid)
+    {
+        @Html.PagedListPager(Model, pageNumber => Url.Action("Index", new
+   {
+       pageNumber,
+       searchBy = Request.QueryString["searchBy"],
+       search = Request.QueryString["search"]
+   }))
+    }
+</div>
+

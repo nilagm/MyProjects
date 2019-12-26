@@ -1,0 +1,43 @@
+﻿body {
+    padding-top: 50px;
+    padding-bottom: 20px;
+    padding-left:30px;
+    border: solid;
+    border-width: thin;
+    border-color: cornflowerblue;
+}
+
+h2{color:darkblue}
+
+a{color:darkblue}
+
+.radiobtns{color:darkblue;font-size:medium;padding-left:3px}
+
+.paddingSpace{margin-top:20px;}
+.txtBox{width:15%;color:darkblue;height:10%}
+
+.error {
+    color: red;
+    margin-left: 5px;
+}
+
+.btn{width:15%;background-color:cornflowerblue;color:wheat}
+
+.tblEmp, .trEmp, .thEmp {
+    border: solid;
+    border-width:thin;
+    color: darkblue;
+    font-size: 13px;
+    position: center;
+    padding-left: 10px;
+    padding-right: 10px;
+}
+.txtBoxCreate {
+    width: 20%;
+    color: darkblue;
+    height: 5%;
+    margin-top:10px;
+    margin-bottom:10px;
+}
+
+.lbl{color:darkblue;font-size:20px;}
